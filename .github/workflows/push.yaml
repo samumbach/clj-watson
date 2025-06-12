@@ -102,5 +102,5 @@ jobs:
           fail-on-result: 'true'
           ignored-paths: "\n\\.cljs$\n^test/\n\n \n\n\t\n\t \n"
           rule-tags: " security  \n\t\tvulnerability\t\n\t ssl\t "
-          rule-severities: "\t \terror \t \nwarning\ninfo"
-          rule-precisions: "low\nmedium\n   high\t\t\t\nvery-high"
+          rule-severities: "\t \terror \t \n\nwarning\ninfo"
+          rule-precisions: "low\n\nmedium\n   high\t\t\t\nvery-high"
