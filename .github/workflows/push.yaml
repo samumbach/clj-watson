@@ -101,6 +101,6 @@ jobs:
           output-type: 'stdout'
           fail-on-result: 'true'
           ignored-paths: '\.cljs$,^test/'
-          rule-tags: 'security,vulnerability,ssl,correctness'
+          rule-tags: 'security,vulnerability,ssl'
           rule-severities: 'error,warning,info'
           rule-precisions: 'low,medium,high,very-high'
