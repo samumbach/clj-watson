@@ -100,7 +100,7 @@ jobs:
         with:
           output-type: 'stdout'
           fail-on-result: 'true'
-          ignored-paths: "\\.cljs$\n^test/"
+          ignored-paths: "\n\\.cljs$\n^test/\n\n \n\n\t\n\t \n"
           rule-tags: " security  \n\t\tvulnerability\t\n\t ssl\t "
           rule-severities: "\t \terror \t \nwarning\ninfo"
           rule-precisions: "low\nmedium\n   high\t\t\t\nvery-high"
