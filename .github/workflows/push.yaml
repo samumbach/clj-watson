@@ -1,0 +1,102 @@
+name: push
+
+on: [push]
+
+jobs:
+  tests:
+    strategy:
+      matrix:
+        namespace: [ unit ]
+        operating-system: [ubuntu-latest]
+        jdk-version: ['11', '17', '21']
+
+    runs-on: ${{ matrix.operating-system }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.jdk-version }}
+
+      - name: Install clojure tools-deps
+        uses: DeLaGuardo/setup-clojure@13.2
+        with:
+          cli: 'latest'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-tests-${{ hashFiles('**/deps.edn') }}
+          restore-keys: ${{ runner.os }}-m2-pr
+
+      - name: Tools versions
+        run: |
+          java --version
+          clojure --version
+
+      - name: Execute ${{ matrix.namespace }} Test
+        run: clojure -M:test ${{ matrix.namespace }}
+
+  check-lint:
+
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+
+    runs-on: ${{ matrix.operating-system }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install clojure tools-deps
+        uses: DeLaGuardo/setup-clojure@13.2
+        with:
+          cli: 'latest'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-tests-${{ hashFiles('**/deps.edn') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Tools versions
+        run: |
+          java --version
+          clojure --version
+
+      - name: Execute lint checks
+        run: |
+          clojure -M:clojure-lsp format --dry
+          clojure -M:clojure-lsp clean-ns --dry
+          clojure -M:clojure-lsp diagnostics
+
+  security:
+
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+
+    runs-on: ${{ matrix.operating-system }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: clj-holmes (Clojure)
+        uses: clj-holmes/clj-holmes-action@main
+        with:
+          output-type: 'stdout'
+          fail-on-result: 'true'
