@@ -100,7 +100,8 @@ jobs:
         with:
           output-type: 'stdout'
           fail-on-result: 'true'
-          ignored-paths: "\n\\.cljs$\n^test/\n\n \n\n\t\n\t \n"
-          rule-tags: " security  \n\t\tvulnerability\t\n\t ssl\t "
-          rule-severities: "\t \terror \t \n\nwarning\ninfo"
-          rule-precisions: "low\n\nmedium\n   high\t\t\t\nvery-high"
+          #ignored-paths: "\n\\.cljs$\n^test/\n\n \n\n\t\n\t \n"
+          #rule-tags: " security  \n\t\tvulnerability\t\n\t ssl\t "
+          #rule-severities: "\t \terror \t \n\nwarning\ninfo"
+          #rule-precisions: "low\n\nmedium\n   high\t\t\t\nvery-high"
+          extra-scan-args: "--ignored-paths\n\.cljs$\n--ignored-paths\n^test/\n--rule-tags\nsecurity\n--rule-tags\nvulnerability\n--rule-tags\nssl\n--rule-severity\nerror\n--rule-severity\nwarning\n--rule-severity\ninfo\n--rule-precision\nlow\n--rule-precision\nmedium\n--rule-precision\nhigh\n--rule-precision\n\n--rule-precision\n \n--rule-precision\n\t\n--rule-precision\nvery-high"
