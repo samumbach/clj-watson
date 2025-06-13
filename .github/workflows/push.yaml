@@ -96,7 +96,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: clj-holmes (Clojure)
-        uses: samumbach/clj-holmes-action@more-github-action-inputs
+        uses: samumbach/clj-holmes-action@main
         with:
           output-type: 'stdout'
           fail-on-result: 'true'
