@@ -100,4 +100,4 @@ jobs:
         with:
           output-type: 'stdout'
           fail-on-result: 'true'
-          verbose: 'true'
+          path: 'test'
